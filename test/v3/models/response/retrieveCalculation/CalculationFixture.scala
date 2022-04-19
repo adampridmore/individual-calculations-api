@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package v3.models.response.retrieveCalculation.calculation
+package v3.models.response.retrieveCalculation
 
 import play.api.libs.json.{JsValue, Json}
 

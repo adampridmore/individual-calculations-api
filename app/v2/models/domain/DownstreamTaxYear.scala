@@ -14,18 +14,26 @@
  * limitations under the License.
  */
 
-package v3.models.response.common
+package v2.models.domain
 
-import play.api.libs.json.Format
-import utils.enums.Enums
+/** Represents a tax year for Downstream
+  *
+  * @param value
+  *   the tax year string (where 2018 represents 2017-18)
+  */
+case class DownstreamTaxYear(value: String) extends AnyVal {
+  override def toString: String = value
+}
 
-sealed trait CalculationRequestor
+object DownstreamTaxYear {
 
-object CalculationRequestor {
+  /** @param taxYear
+    *   tax year in MTD format (e.g. 2017-18)
+    */
+  def fromMtd(taxYear: String): DownstreamTaxYear =
+    DownstreamTaxYear(taxYear.take(2) + taxYear.drop(5))
 
-  case object customer extends CalculationRequestor
-  case object hmrc     extends CalculationRequestor
-  case object agent    extends CalculationRequestor
+  def fromDownstreamIntToString(taxYear: Int): String =
+    (taxYear - 1) + "-" + taxYear.toString.drop(2)
 
-  implicit val format: Format[CalculationRequestor] = Enums.format[CalculationRequestor]
 }
